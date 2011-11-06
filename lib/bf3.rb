@@ -11,10 +11,25 @@ module Bf3
       @platform = platform
     end
 
-    def callUp
-      opts = {player: @name, output: 'json'}
-      response = HTTParty.post("http://api.bf3stats.com/#{@platform}/player/", :body => opts)
-      return JSON response.body
+    def callUp(opt='clear,global')
+      body = {
+        player: @name,
+        output: 'json',
+        opt: opt
+      }
+      response = HTTParty.post("http://api.bf3stats.com/#{@platform}/player/", :body => body)
+      if response.code == 200
+        stats = JSON(response.body)['stats']
+        @stats = stats
+        return stats
+      else
+        return response
+      end
+    end
+
+    def kdr
+      self.callUp() unless @stats and @stats['global']['kills']
+      return @stats['global']['kills'].to_f / @stats['global']['deaths']
     end
 
   end
