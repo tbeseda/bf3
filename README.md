@@ -1,8 +1,9 @@
-# Simple Battlefield 3 stats from bf3stats.com
+# Simple Battlefield 3 Stats
+powered by bf3stats.com
 
-## Example
+## Example:
 
-'''
+```ruby
 require 'bf3'
 
 player = Bf3::Player.new('Raengr', '360')
@@ -14,4 +15,4 @@ kdratio = player.kdr()
 
 # to get ALL THE STATS!
 all_stats = player.callUp('all')
-'''
+```
